@@ -26,13 +26,11 @@ const Home = () => {
         </p>
       </article>
       <div className="row cards">
+        <Card idx={4} />
         <Card idx={1} />
         <Card idx={2} />
         <Card idx={3} />
-        <Card idx={4} />
         <Card idx={5} />
-        <Card idx={6} />
-        <Card idx={7} />
       </div>
     </div>
   );
