@@ -1,0 +1,15 @@
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-nav a:link, .main-nav a:visited {
+    font-size: 1.2em;
+    color: #2B2D42;
+    text-decoration: none;
+}
+
+.main-nav a.active {
+    color: #129490;
+}
