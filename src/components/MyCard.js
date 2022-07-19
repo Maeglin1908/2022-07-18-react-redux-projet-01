@@ -1,5 +1,6 @@
 import "../styles/MyCard.css";
 const MyCard = ({ game }) => {
+  // console.log(game instanceof Game);
   const getClassName = () => {
     let className = "card";
     if (game.finished) {
