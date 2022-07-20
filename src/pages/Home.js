@@ -17,7 +17,7 @@ const Home = () => (
         {!games || games.length === 0 ? (
           <ErrorBanner message="Aucun jeu en base" />
         ) : (
-          games.map((g, index) => <MyCard key={index} game={g} />)
+          games.map((g, index) => <MyCard key={g.id} jeu={g} />)
         )}
       </div>
     </main>
