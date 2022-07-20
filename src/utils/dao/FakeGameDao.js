@@ -7,6 +7,7 @@ class FakeGameDao {
     this.image = "NONE";
     this.finished = false;
   }
+
   getById(id) {
     switch (id) {
       case 0:
@@ -52,7 +53,7 @@ class FakeGameDao {
       default:
         break;
     }
-    return new Game(this.title, this.description, this.studio, this.image, this.finished);
+    return new Game(id, this.title, this.description, this.studio, this.image, this.finished);
   }
 }
 
