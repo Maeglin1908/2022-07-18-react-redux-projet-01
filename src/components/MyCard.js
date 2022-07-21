@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 import "../styles/MyCard.css";
 import Game from "./../utils/models/Game";
-const MyCard = ({ jeu: game, deleteFct, updateGame }) => {
+const MyCard = ({ jeu: game, deleteGame, changeStatus }) => {
     //La propriété "jeu" est passé dans la variable game (déstructuration, renommage de var)
     const getClassName = () => {
         let className = "card";
@@ -12,18 +11,8 @@ const MyCard = ({ jeu: game, deleteFct, updateGame }) => {
         return className;
     };
 
-    const [finished, setFinished] = useState(game.finished);
-    const [classname, setClassname] = useState(getClassName());
-
-    function finishGame() {
-        game.finished = !game.finished;
-        updateGame(game);
-        setFinished(game.finished);
-        setClassname(getClassName());
-    }
-
     return (
-        <div className={classname}>
+        <div className={getClassName()}>
             <div className="card-header">
                 <img src={game.image} alt={`Image du jeu ${game.title}`} />
             </div>
@@ -33,12 +22,12 @@ const MyCard = ({ jeu: game, deleteFct, updateGame }) => {
                 </h3>
                 <p>-- {game.studio}</p>
                 <p>{game.description}</p>
-                <div>
-                    <input type="checkbox" name="finished" onClick={finishGame} />
-                </div>
-                <div>
-                    <button onClick={() => deleteFct(game)}>Supprimer</button>
-                </div>
+            </div>
+            <div className="card-footer">
+                <button onClick={() => changeStatus(game)}>{game.finished ? "Vu" : "Pas vu"}</button>
+                <button className="secondary" onClick={() => deleteGame(game)}>
+                    Supprimer
+                </button>
             </div>
         </div>
     );
