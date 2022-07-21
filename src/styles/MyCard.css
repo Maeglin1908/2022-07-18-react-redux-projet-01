@@ -11,6 +11,7 @@
 
 .finished {
     border: solid 1px green;
+    background-color: #9bf7f4;
 }
 
 .card-header {

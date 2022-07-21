@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Formulaire from "../components/Formulaire";
 import MyCard from "../components/MyCard";
 import MyHeader from "../components/MyHeader";
 import ErrorBanner from "./../components/ErrorBanner";
 import FakeGameDao from "./../utils/dao/FakeGameDao";
-import Game from "./../utils/models/Game";
+import { create, getAll } from "./../utils/services/GameService";
+
 const fakeDao = new FakeGameDao();
 // const games = [];
 // for (let idx = 0; idx < 5; idx++) {
@@ -13,56 +14,45 @@ const fakeDao = new FakeGameDao();
 
 const Home = () => {
     const [games, setGames] = useState([]);
+    const [updated, setUpdated] = useState(0);
 
-    function addGame({ title, description, studio, image }) {
-        const newGame = new Game(title, description, studio, image);
-        const updated = [...games];
-        updated.push(newGame);
-        setGames(updated);
-    }
+    useEffect(() => {
+        console.log("use effect games");
+        getAll()
+            .then((games_res) => setGames(games_res))
+            .catch(() => alert("tout pété"));
+    }, [updated]);
 
-    function deleteGame(game) {
-        const updated = [...games];
-        const idx = updated.indexOf(game);
-        if (idx >= 0) {
-            updated.splice(idx, 1);
-            setGames(updated);
-        }
-    }
-    function updateGame(game) {
-        game.finished = !game.finished;
-        const updated = [...games];
-        const idx = updated.indexOf(game);
-        updated[idx] = game;
-        setGames(updated);
-    }
-
-    function cleanGames() {
-        setGames([]);
-    }
+    // async function cleanGames() {
+    //     CANT WORK FOR NOW, JSON-SERVER KEEP CRASHING
+    //     const gamesIds = games.map((game) => game.id);
+    //     gamesIds.forEach((id) => remove(id));
+    //     setUpdated(updated + 1);
+    // }
 
     return (
         <>
             <MyHeader />
             <main>
+                <h2>Ajouter un jeu</h2>
+                <Formulaire
+                    action={(game) => {
+                        create(game).then(setUpdated(updated + 1));
+                    }}
+                />
+                {/* <div>
+                    <button onClick={() => cleanGames()}>Vider les jeux !</button>
+                </div> */}
                 <h2>Mes Jeux</h2>
 
                 <div className="grid">
                     {games?.length ? (
-                        games.map((g) => (
-                            <MyCard key={g.id} jeu={g} changeStatus={updateGame} deleteGame={deleteGame} />
-                        ))
+                        games.map((g) => <MyCard key={g.id} jeu={g} updateGame={() => setUpdated(updated + 1)} />)
                     ) : (
                         <ErrorBanner message="Aucun jeu en base" />
                     )}
                 </div>
-
-                <h2>Ajouter un jeu</h2>
             </main>
-            <Formulaire action={addGame} />
-            <div>
-                <button onClick={() => cleanGames()}>Vider les jeux !</button>
-            </div>
         </>
     );
 };

@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import "../styles/MyCard.css";
 import Game from "./../utils/models/Game";
-const MyCard = ({ jeu: game, deleteGame, changeStatus }) => {
+import { remove, update } from "./../utils/services/GameService";
+const MyCard = ({ jeu: game, updateGame }) => {
     //La propriété "jeu" est passé dans la variable game (déstructuration, renommage de var)
     const getClassName = () => {
         let className = "card";
@@ -11,6 +12,13 @@ const MyCard = ({ jeu: game, deleteGame, changeStatus }) => {
         return className;
     };
 
+    const finishGame = () => {
+        game.finished = !game.finished;
+        update(game).then(updateGame());
+    };
+    const removeGame = () => {
+        remove(game).then(updateGame());
+    };
     return (
         <div className={getClassName()}>
             <div className="card-header">
@@ -24,8 +32,8 @@ const MyCard = ({ jeu: game, deleteGame, changeStatus }) => {
                 <p>{game.description}</p>
             </div>
             <div className="card-footer">
-                <button onClick={() => changeStatus(game)}>{game.finished ? "Vu" : "Pas vu"}</button>
-                <button className="secondary" onClick={() => deleteGame(game)}>
+                <button onClick={() => finishGame()}>{game.finished ? "Vu" : "Pas vu"}</button>
+                <button className="secondary" onClick={() => removeGame(game)}>
                     Supprimer
                 </button>
             </div>
@@ -36,5 +44,5 @@ const MyCard = ({ jeu: game, deleteGame, changeStatus }) => {
 export default MyCard;
 
 MyCard.propTypes = {
-    jeu: PropTypes.instanceOf(Game),
+    game: PropTypes.instanceOf(Game),
 };

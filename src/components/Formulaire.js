@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 const Formulaire = function ({ action: submit }) {
     function saveGame(game) {
-        reset();
         submit(game);
+        reset();
     }
 
     const {
