@@ -4,6 +4,7 @@ import MyCard from "../components/MyCard";
 import MyHeader from "../components/MyHeader";
 import ErrorBanner from "./../components/ErrorBanner";
 import FakeGameDao from "./../utils/dao/FakeGameDao";
+import Game from "./../utils/models/Game";
 const fakeDao = new FakeGameDao();
 // const games = [];
 // for (let idx = 0; idx < 5; idx++) {
@@ -13,26 +14,23 @@ const fakeDao = new FakeGameDao();
 const Home = () => {
     const [games, setGames] = useState([]);
 
-    function addGame(game) {
+    function addGame({ title, description, studio, image }) {
+        const newGame = new Game(title, description, studio, image);
         const updated = [...games];
-        if (games.length > 0) {
-            game.id = updated[updated.length - 1].id + 1;
-        } else {
-            game.id = 0;
-        }
-        updated.push(game);
+        updated.push(newGame);
         setGames(updated);
     }
 
-    function deleteFct(game) {
+    function deleteGame(game) {
         const updated = [...games];
         const idx = updated.indexOf(game);
-        if (idx && idx >= 0) {
+        if (idx >= 0) {
             updated.splice(idx, 1);
             setGames(updated);
         }
     }
     function updateGame(game) {
+        game.finished = !game.finished;
         const updated = [...games];
         const idx = updated.indexOf(game);
         updated[idx] = game;
@@ -50,12 +48,12 @@ const Home = () => {
                 <h2>Mes Jeux</h2>
 
                 <div className="grid">
-                    {!games || games.length === 0 ? (
-                        <ErrorBanner message="Aucun jeu en base" />
-                    ) : (
-                        games.map((g, index) => (
-                            <MyCard key={g.id} jeu={g} updateGame={updateGame} deleteFct={deleteFct} />
+                    {games?.length ? (
+                        games.map((g) => (
+                            <MyCard key={g.id} jeu={g} changeStatus={updateGame} deleteGame={deleteGame} />
                         ))
+                    ) : (
+                        <ErrorBanner message="Aucun jeu en base" />
                     )}
                 </div>
 

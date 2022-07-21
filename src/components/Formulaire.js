@@ -1,16 +1,15 @@
 import { useForm } from "react-hook-form";
-import Game from "./../utils/models/Game";
-const Formulaire = function ({ action: addGame }) {
-    function saveGame({ id, title, description, studio, image, finished = false }) {
-        const newGame = new Game(id, title, description, studio, image, finished);
-        addGame(newGame);
-        console.log(newGame);
+const Formulaire = function ({ action: submit }) {
+    function saveGame(game) {
+        reset();
+        submit(game);
     }
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm();
 
     return (

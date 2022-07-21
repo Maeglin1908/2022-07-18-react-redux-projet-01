@@ -1,27 +1,30 @@
 class Game {
-  #id;
-  title;
-  description;
-  studio;
-  image;
-  finished;
+    #id;
+    title;
+    description;
+    studio;
+    image;
+    finished;
 
-  constructor(id, title, description, studio, image, finished = false) {
-    this.#id = id;
-    this.title = title;
-    this.description = description;
-    this.studio = studio;
-    this.image = image;
-    this.finished = finished;
-  }
+    static count = 0;
 
-  get id() {
-    return this.#id;
-  }
+    constructor(title, description, studio, image, finished = false) {
+        Game.count++;
+        this.#id = Game.count;
+        this.title = title;
+        this.description = description;
+        this.studio = studio;
+        this.image = image;
+        this.finished = finished;
+    }
 
-  set id(id) {
-    this.#id = id;
-  }
+    get id() {
+        return this.#id;
+    }
+
+    set id(id) {
+        this.#id = id;
+    }
 }
 
 export default Game;
