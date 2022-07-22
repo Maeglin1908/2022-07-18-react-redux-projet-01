@@ -3,24 +3,21 @@ import Formulaire from "../components/Formulaire";
 import MyCard from "../components/MyCard";
 import MyHeader from "../components/MyHeader";
 import ErrorBanner from "./../components/ErrorBanner";
-import FakeGameDao from "./../utils/dao/FakeGameDao";
 import { create, getAll } from "./../utils/services/GameService";
-
-const fakeDao = new FakeGameDao();
-// const games = [];
-// for (let idx = 0; idx < 5; idx++) {
-//     games.push(fakeDao.getById(idx));
-// }
 
 const Home = () => {
     const [games, setGames] = useState([]);
     const [updated, setUpdated] = useState(0);
-
+    const [message, setMessage] = useState("Aucun jeu en base...");
     useEffect(() => {
-        console.log("use effect games");
         getAll()
-            .then((games_res) => setGames(games_res))
-            .catch(() => alert("tout pété"));
+            .then((games_res) => {
+                setGames(games_res);
+                setMessage("Aucun jeu en base");
+            })
+            .catch((err) => {
+                setMessage(err.message);
+            });
     }, [updated]);
 
     // async function cleanGames() {
@@ -49,7 +46,7 @@ const Home = () => {
                     {games?.length ? (
                         games.map((g) => <MyCard key={g.id} jeu={g} updateGame={() => setUpdated(updated + 1)} />)
                     ) : (
-                        <ErrorBanner message="Aucun jeu en base" />
+                        <ErrorBanner message={message} />
                     )}
                 </div>
             </main>
