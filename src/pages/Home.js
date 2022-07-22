@@ -43,7 +43,7 @@ const Home = () => {
                 {/* <div>
                     <button onClick={() => cleanGames()}>Vider les jeux !</button>
                 </div> */}
-                <h2>Mes Jeux</h2>
+                <h2>Mes Jeux ({games.length})</h2>
 
                 <div className="grid">
                     {games?.length ? (

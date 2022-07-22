@@ -11,7 +11,7 @@
 
 .finished {
     border: solid 1px green;
-    background-color: #9bf7f4;
+    background-color: #acf89d;
 }
 
 .card-header {
@@ -28,6 +28,17 @@
     text-align: start;
     height: 40%;
     overflow: hidden;
+}
+
+.card-body h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+.card-body p {
+    font-size: 0.8rem;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 }
 
 .card-footer {
@@ -47,6 +58,9 @@ button {
     transition: 0.5s;
 }
 
+.card button {
+    width: 40%;
+}
 button:hover {
     background-color: #129490;
     border-color: #129490;
@@ -55,4 +69,9 @@ button:hover {
 button.secondary {
     color: #129490;
     background-color: white;
+}
+button.secondary:hover {
+    background-color: #ff8e8e;
+    border-color: #ff4444;
+    color: white;
 }
