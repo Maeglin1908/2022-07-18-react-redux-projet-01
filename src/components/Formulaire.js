@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
+import { create } from "../utils/services/GameService";
 import "./../styles/Formulaire.css";
+
 const Formulaire = function ({ action: submit }) {
-    function saveGame(game) {
-        submit(game);
+    async function saveGame(game) {
+        const res = await create(game);
+        submit(res);
         reset();
     }
 
@@ -19,7 +22,7 @@ const Formulaire = function ({ action: submit }) {
                 <div>
                     <label htmlFor="title">Title :</label>
                     <input type="text" name="title" {...register("title", { required: "Un titre est obligatoire" })} />
-                    {errors.title && <p className="error">{errors.title}</p>}
+                    {errors.title && <p className="error">{errors.title.message}</p>}
                 </div>
                 <div>
                     <label htmlFor="description">Description :</label>

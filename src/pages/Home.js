@@ -3,21 +3,35 @@ import Formulaire from "../components/Formulaire";
 import MyCard from "../components/MyCard";
 import MyHeader from "../components/MyHeader";
 import ErrorBanner from "./../components/ErrorBanner";
-import { create, getAll } from "./../utils/services/GameService";
+import { getAll } from "./../utils/services/GameService";
 
 const Home = () => {
     const [games, setGames] = useState([]);
     const [updated, setUpdated] = useState(0);
     const [message, setMessage] = useState("Aucun jeu en base...");
     useEffect(() => {
-        getAll()
-            .then((games_res) => {
+        // Les deux notations sont possibles :
+        // --------------------------------------
+        // getAll()
+        //     .then((games_res) => {
+        //         setGames(games_res);
+        //         setMessage("Aucun jeu en base");
+        //     })
+        //     .catch((err) => {
+        //         setMessage(err.message);
+        //     });
+        // --------------------------------------
+        async function load() {
+            try {
+                const games_res = await getAll();
                 setGames(games_res);
                 setMessage("Aucun jeu en base");
-            })
-            .catch((err) => {
+            } catch (err) {
                 setMessage(err.message);
-            });
+            }
+        }
+        load();
+        // --------------------------------------
     }, [updated]);
 
     // async function cleanGames() {
@@ -34,7 +48,8 @@ const Home = () => {
                 <h2>Ajouter un jeu</h2>
                 <Formulaire
                     action={(game) => {
-                        create(game).then(setUpdated(updated + 1));
+                        games.push(game);
+                        setUpdated(updated + 1);
                     }}
                 />
                 {/* <div>
