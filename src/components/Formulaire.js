@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import "./../styles/Formulaire.css";
 const Formulaire = function ({ action: submit }) {
     function saveGame(game) {
         submit(game);
@@ -42,7 +43,10 @@ const Formulaire = function ({ action: submit }) {
                     <label htmlFor="image">URL de l'image :</label>
                     <input type="text" name="image" {...register("image")} />
                 </div>
-                <button type="submit">Save game</button>
+                <div>
+                    <label></label>
+                    <button type="submit">Save game</button>
+                </div>
             </form>
         </>
     );

@@ -26,7 +26,7 @@ const MyCard = ({ jeu: game, updateGame }) => {
             </div>
             <div className="card-body">
                 <h3>
-                    (#{game.id + 1}) {game.title}
+                    (#{game.id}) {game.title}
                 </h3>
                 <p>-- {game.studio}</p>
                 <p>{game.description}</p>
