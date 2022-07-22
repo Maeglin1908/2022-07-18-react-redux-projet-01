@@ -5,7 +5,9 @@ export function getAll() {
     return axios
         .get(url)
         .then((res) => res.data)
-        .catch((err) => alert("Nope (get all)"));
+        .catch((err) => {
+            throw new Error("Le serveur d'API semble être arrêté ...");
+        });
 }
 
 // Avec async, juste pour avoir les deux façons de faire.
